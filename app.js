@@ -122,7 +122,7 @@ app.post('/api/v1/product', async (req, res, next) => {
         // const result = await product.save()
         const result = await Product.create(req.body)
         result.logger()
-        
+
         res.status(200).json({
             status: 'success',
             message: 'Data inserted successfully',
@@ -139,4 +139,28 @@ app.post('/api/v1/product', async (req, res, next) => {
 
 })
 
+app.get('/api/v1/product', async (req, res, next) => {
+    try {
+        // const products = await (await Product.where("name").equals("/\w/").where("quantity").gt(100)).lt(600).limit(2).sort({ quantity: -1 })
+
+        const product = await Product.findById('631e9de037586c32d375c82d')
+
+        res.status(200).json({
+            status: "Success",
+            data: products
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: "fail",
+            message: "can't get data",
+            error: error.message
+        })
+    }
+})
+
+
 module.exports = app;
+
+
+
+// 3 methods to query in mongoose. find,findOne,findbyId
