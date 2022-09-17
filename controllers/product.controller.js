@@ -28,7 +28,7 @@ exports.createProduct = async (req, res, next) => {
         // const product = new Product(req.body)
         // const result = await product.save()
         const result = await createProductService(req.body)
-        result.logger()
+        // result.logger()
 
         res.status(200).json({
             status: 'success',
