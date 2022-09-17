@@ -14,7 +14,7 @@ const productRoute = require('./routes/product.route')
 
 
 app.get("/", (req, res) => {
-    // res.send("Route is working! Yay!");
+    res.send("Route is working! Yay!");
 
 });
 
