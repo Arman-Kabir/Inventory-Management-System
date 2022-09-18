@@ -47,7 +47,7 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true,
         enum: {
-            values: ["In-Stock", "Out-of-stock", "Discontinued"],
+            values: ["in-stock", "Out-of-stock", "Discontinued"],
             message: "Status can't be {VALUE}"
         }
 
