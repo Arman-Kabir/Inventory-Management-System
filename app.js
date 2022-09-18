@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 // routes
-const productRoute = require('./routes/product.route')
+const productRoute = require('./routes/product.route');
 
 
 

@@ -19,7 +19,7 @@ exports.getProducts = async (req, res, next) => {
             error: error.message
         })
     }
-}
+};
 
 exports.createProduct = async (req, res, next) => {
     // res.send('it is working');
@@ -44,7 +44,7 @@ exports.createProduct = async (req, res, next) => {
     }
     // save or create
 
-}
+};
 
 exports.updateProduct = async (req, res, next) => {
     try {
@@ -62,4 +62,22 @@ exports.updateProduct = async (req, res, next) => {
             error: error.message
         })
     }
-}
+};
+
+exports.bulkUpdateProduct = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const result = await updateProductService(id,req.body);
+        res.status(200).json({
+            status:"success",
+            message:"Successfully updated the product"
+        })
+
+    } catch (error) {
+        res.status(400).json({
+            status: 'fail',
+            message: `Couldn't update the product`,
+            error: error.message
+        })
+    }
+};
