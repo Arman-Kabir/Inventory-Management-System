@@ -1,5 +1,5 @@
 
-const Product = require('../models/Product');
+// const Product = require('../models/Product');
 const { getProductsService, createProductService, updateProductService, bulkUpdateProductService } = require('../services/product.services');
 
 exports.getProducts = async (req, res, next) => {
@@ -68,7 +68,7 @@ exports.bulkUpdateProduct = async (req, res, next) => {
     try {
         // const { id } = req.params;
         console.log(req.body);
-        // const result = await bulkUpdateProductService(req.body);
+        const result = await bulkUpdateProductService(req.body);
 
         res.status(200).json({
             status:"success",
