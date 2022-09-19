@@ -34,6 +34,15 @@ exports.getProducts = async (req, res, next) => {
             console.log(fields);
         }
 
+        if (req.query.page) {
+            const { page = 1, limit = 10 } = req.query;
+            // 50 products
+            // each page 10 products
+            const skip = (page - 1) * parseInt(limit);
+            queries.skip = skip;
+            queries.limit = parseInt(limit);
+        }
+
         // console.log('Original Object',req.query);
         // console.log('query object',queryObject);
 
