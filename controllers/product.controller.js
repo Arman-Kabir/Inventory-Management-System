@@ -4,29 +4,40 @@ const { getProductsService, createProductService, updateProductService, bulkUpda
 
 exports.getProducts = async (req, res, next) => {
     try {
-        // const products = await (await Product.where("name").equals("/\w/").where("quantity").gt(100)).lt(600).limit(2).sort({ quantity: -1 })
-        const filters = { ...req.query };
+        // const products = await (await Product.where("name").equals("/\w/").where("quantity").gt(100)).lt(600).limit(2).sort({ quantity: -1 });
+        console.log(req.query);
+        let filters = { ...req.query };
+
         // sort,limit,page ->exclude
         const excludeFields = ['sort', 'page', 'limit'];
         excludeFields.forEach(field => delete filters[field]);
 
-        const queries = {}
-        if(req.query.sort){
+        //  gt,lt,gte,lte
+        let filtersString = JSON.stringify(filters);
+        filtersString = filtersString.replace(/\b(gt|gte|lt|lte)\b/, match => `$${match}`);
+
+        filters = JSON.parse(filtersString);
+        console.log(filters);
+
+        const queries = {};
+
+
+        if (req.query.sort) {
             // price,quantity -> 'price quantity'
             const sortBy = req.query.sort.split(',').join(' ');
-            queries.sortBy=sortBy
+            queries.sortBy = sortBy
             console.log(sortBy);
         }
-        if(req.query.fields){
+        if (req.query.fields) {
             const fields = req.query.fields.split(',').join(' ');
-            queries.fields=fields
+            queries.fields = fields
             console.log(fields);
         }
 
         // console.log('Original Object',req.query);
         // console.log('query object',queryObject);
 
-        const products = await getProductsService(filters,queries);
+        const products = await getProductsService(filters, queries);
 
         res.status(200).json({
             status: "Success",
