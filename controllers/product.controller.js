@@ -5,8 +5,15 @@ const { getProductsService, createProductService, updateProductService, bulkUpda
 exports.getProducts = async (req, res, next) => {
     try {
         // const products = await (await Product.where("name").equals("/\w/").where("quantity").gt(100)).lt(600).limit(2).sort({ quantity: -1 })
+        const queryObject = { ...req.query };
+        // sort,limit,page ->exclude
+        const excludeFields = ['sort', 'page', 'limit'];
+        excludeFields.forEach(field => delete queryObject[field]);
 
-        const products = await getProductsService()
+        // console.log('Original Object',req.query);
+        // console.log('query object',queryObject);
+
+        const products = await getProductsService(queryObject);
 
         res.status(200).json({
             status: "Success",
@@ -49,10 +56,10 @@ exports.createProduct = async (req, res, next) => {
 exports.updateProduct = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const result = await updateProductService(id,req.body);
+        const result = await updateProductService(id, req.body);
         res.status(200).json({
-            status:"success",
-            message:"Successfully updated the product"
+            status: "success",
+            message: "Successfully updated the product"
         })
 
     } catch (error) {
@@ -71,8 +78,8 @@ exports.bulkUpdateProduct = async (req, res, next) => {
         const result = await bulkUpdateProductService(req.body);
 
         res.status(200).json({
-            status:"success",
-            message:"Successfully updated the product"
+            status: "success",
+            message: "Successfully updated the product"
         })
 
     } catch (error) {
@@ -92,8 +99,8 @@ exports.deleteProductById = async (req, res, next) => {
         await console.log(result);
 
         res.status(200).json({
-            status:"success",
-            message:"Successfully deleted the product"
+            status: "success",
+            message: "Successfully deleted the product"
         })
 
     } catch (error) {
@@ -113,8 +120,8 @@ exports.bulkDeleteProduct = async (req, res, next) => {
         const result = await bulkDeleteProductService(req.body.ids);
 
         res.status(200).json({
-            status:"success",
-            message:"Successfully deleted the product"
+            status: "success",
+            message: "Successfully deleted the product"
         })
 
     } catch (error) {
