@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema.Types
+const { ObjectId } = mongoose.Schema.Types;
+const validator = require('validator');
 
 // schema design
 const productSchema = mongoose.Schema({
@@ -7,6 +8,7 @@ const productSchema = mongoose.Schema({
         type: String,
         required: [true, "Please provide a name for this product"],
         trim: true,
+        lowercase: true,
         unique: [true, "Name must be unique"],
         minLength: [3, "Name must be at least 3 charecters"],
         maxLength: [100, "Name is too large"]
@@ -20,7 +22,7 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true,
         enum: {
-            values: ["kg", "liter", "pcs"],
+            values: ["kg", "liter", "pcs", "bag"],
             message: "Unit value can't be {VALUE}, must be kg/liter/pcs/bag"
         }
     },
@@ -40,22 +42,22 @@ const productSchema = mongoose.Schema({
                 });
                 return isValid;
             },
+            message: "Please provide valid image urls"
         },
-        message: "Please provide valid image urls"
     }],
-    category:{
-        type:String,
-        required:true,
+    category: {
+        type: String,
+        required: true,
     },
-    brand:{
-        name:{
-            type:String,
-            required:true
+    brand: {
+        name: {
+            type: String,
+            required: true
         },
-        id:{
-            type:ObjectId,
-            ref:"Brand",
-            required:true
+        id: {
+            type: ObjectId,
+            ref: "Brand",
+            required: true
         }
     }
 
