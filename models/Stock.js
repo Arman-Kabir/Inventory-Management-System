@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema.Types
+const { ObjectId } = mongoose.Schema.Types;
+const validator = require('validator');
 
 // schema design
 const stockSchema = mongoose.Schema({
@@ -51,7 +52,7 @@ const stockSchema = mongoose.Schema({
     price: {
         type: Number,
         required: true,
-        min: [0, "Produvt price can't be negative"]
+        min: [0, "Product price can't be negative"]
     },
     quantity: {
         type: Number,
