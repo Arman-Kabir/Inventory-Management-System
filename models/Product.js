@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema.Types
 
 // schema design
 const productSchema = mongoose.Schema({
