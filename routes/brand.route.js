@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.route("/").post(brandController.createBrand).get(brandController.getBrands);
 
-router.route("/:id").get(brandController.getBrandById).patch(brandController.updateBrand);
+router.route("/:id").get(brandController.getBrandsById).patch(brandController.updateBrand);
 
 
 

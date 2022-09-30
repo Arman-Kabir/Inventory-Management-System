@@ -18,7 +18,7 @@ exports.createBrand = async (req, res, next) => {
 
 exports.getBrands = async (req, res, next) => {
     try {
-        const brands = await getBrandsService();
+        const brands = await getBrandsService(req.body);
 
         res.status(200).json({
             status:"Success",
@@ -38,7 +38,7 @@ exports.getBrandsById = async (req, res, next) => {
         const brand = await getBrandByIdService(id);
 
         if(!brand){
-            res.status(400).json({
+            return res.status(400).json({
                 status:"fail",
                 error:"COuldn't find brand with this id"
             })
@@ -46,7 +46,7 @@ exports.getBrandsById = async (req, res, next) => {
 
         res.status(200).json({
             status:"Success",
-            data:brands
+            data:brand
         })
     } catch (error) {
         res.status(400).json({
