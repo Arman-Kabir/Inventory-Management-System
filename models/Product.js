@@ -8,8 +8,8 @@ const productSchema = mongoose.Schema({
         type: String,
         required: [true, "Please provide a name for this product"],
         trim: true,
-        lowercase: true,
         unique: [true, "Name must be unique"],
+        lowercase: true,
         minLength: [3, "Name must be at least 3 charecters"],
         maxLength: [100, "Name is too large"]
     },
@@ -63,30 +63,17 @@ const productSchema = mongoose.Schema({
 
 }, {
     timestamps: true
-    // _id:true
 });
 
-
 // mongoose middlewares for saving data: pre/post
-// productSchema.pre('save', function (next) {
+productSchema.pre('save', function (next) {
 
-//     console.log('Before saving data');
-//     if (this.quantity == 0) {
-//         this.status = 'out-of-stock';
-//     }
-//     next()
-// })
-
-// productSchema.post('save',function(doc,next){
-//     console.log('After saving data');
-
-//     next()
-// })
-
-// productSchema.methods.logger = function () {
-//     console.log(`Data saved for ${this.name} `);
-// }
-
+    console.log('Before saving data');
+    if (this.quantity == 0) {
+        this.status = 'out-of-stock';
+    }
+    next()
+});
 
 // Schema ->Model -> Query
 const Product = mongoose.model('Product', productSchema);

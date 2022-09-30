@@ -113,7 +113,6 @@ const stockSchema = mongoose.Schema({
     }
 }, {
     timestamps: true
-    // _id:true
 });
 
 
