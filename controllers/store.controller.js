@@ -1,3 +1,4 @@
+const { getStoresService, createStoreService, getStoreByIdService } = require("../services/store.service");
 
 
 
@@ -38,8 +39,18 @@ exports.createStore = async (req, res) => {
 exports.getStoreById = async (req, res) => {
     const { id } = req.params;
     try {
-        
+        const store = await getStoreByIdService(id);
+
+        res.status(200).json({
+            status: "success",
+            data: store
+        });
+
     } catch (error) {
-        
+        res.status(400).json({
+            status: "fail",
+            message: "can't get the store",
+            error: error.message,
+        });
     }
-}
+};
