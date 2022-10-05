@@ -12,34 +12,34 @@ const brandSchema = mongoose.Schema({
         lowercase: true
     },
     description: String,
-    email: {
-        type: String,
-        validate: [validator.isEmail, "Please provide a valid email"],
-        lowercase: true
-    },
-    website: {
-        type: String,
-        validate: [validator.isURL, "Please provide a valid url"]
-    },
+    // email: {
+    //     type: String,
+    //     validate: [validator.isEmail, "Please provide a valid email"],
+    //     lowercase: true
+    // },
+    // website: {
+    //     type: String,
+    //     validate: [validator.isURL, "Please provide a valid url"]
+    // },
     location: String,
-    products: [{
-        type: ObjectId,
-        ref: "Product"
-    }],
-    suppliers: [{
-        name: String,
-        contactNumber: String,
-        id: {
-            type: ObjectId,
-            ref: "Supplier"
-        }
+    // products: [{
+    //     type: ObjectId,
+    //     ref: "Product"
+    // }],
+    // suppliers: [{
+    //     name: String,
+    //     contactNumber: String,
+    //     id: {
+    //         type: ObjectId,
+    //         ref: "Supplier"
+    //     }
 
-    }],
-    status: {
-        type: String,
-        enum: ["active", "inactive"],
-        default: "active"
-    }
+    // }],
+    // status: {
+    //     type: String,
+    //     enum: ["active", "inactive"],
+    //     default: "active"
+    // }
 }, {
     timestamps: true
 });
