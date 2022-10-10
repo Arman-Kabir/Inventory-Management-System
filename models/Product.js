@@ -49,17 +49,17 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    // brand: {
-    //     name: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     id: {
-    //         type: ObjectId,
-    //         ref: "Brand",
-    //         required: true
-    //     }
-    // }
+    brand: {
+        name: {
+            type: String,
+            required: true
+        },
+        id: {
+            type: ObjectId,
+            ref: "Brand",
+            required: true
+        }
+    }
 
 }, {
     timestamps: true

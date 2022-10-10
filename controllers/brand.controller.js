@@ -6,7 +6,8 @@ exports.createBrand = async (req, res, next) => {
 
         res.status(200).json({
             status:"Success",
-            message:"Successfully created the brand"
+            message:"Successfully created the brand",
+            data:result
         })
     } catch (error) {
         res.status(400).json({
