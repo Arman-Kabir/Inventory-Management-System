@@ -1,6 +1,6 @@
 
 // const Product = require('../models/Product');
-const { getProductsService, createProductService, updateProductService, bulkUpdateProductService, deleteProductByIdService, bulkDeleteProductService } = require('../services/product.services');
+const { getProductsService, createProductService, updateProductService, bulkUpdateProductService, deleteProductByIdService, bulkDeleteProductService, fileUploadService } = require('../services/product.services');
 
 exports.getProducts = async (req, res, next) => {
     try {
@@ -170,8 +170,14 @@ exports.bulkDeleteProduct = async (req, res, next) => {
 exports.fileUpload = async (req, res) => {
     try {
         
-        res.status(200).json(req.file)
+        // const productImage = await fileUploadService(req.file);
+        // res.status(200).json(req.file)
+        res.status(200).json(req.files)
     } catch (error) {
-        
+        // res.status(400).json({
+        //     status: 'fail',
+        //     message: `Couldn't create the image`,
+        //     error: error.message
+        // })
     }
 }
