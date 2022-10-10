@@ -2,10 +2,12 @@
 const Brand = require("../models/Brand");
 
 exports.createBrandService = async (data) => {
+    console.log(data);
     const result = await Brand.create(data);
     return result;
 };
 exports.getBrandsService = async () => {
+    console.log('getting brands');
     const brands = await Brand.find({}); //.select('-products -suppliers')
     return brands;
 };

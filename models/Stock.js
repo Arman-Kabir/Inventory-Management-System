@@ -63,17 +63,17 @@ const stockSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
-    brand: {
-        name: {
-            type: String,
-            required: true
-        },
-        id: {
-            type: ObjectId,
-            ref: "Brand",
-            required: true
-        }
-    },
+    // brand: {
+    //     name: {
+    //         type: String,
+    //         required: true
+    //     },
+    //     id: {
+    //         type: ObjectId,
+    //         ref: "Brand",
+    //         required: true
+    //     }
+    // },
     status: {
         type: String,
         required: true,
