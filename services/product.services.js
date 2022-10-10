@@ -66,3 +66,10 @@ exports.bulkDeleteProductService = async (ids) => {
 
     return result;
 };
+
+exports.fileUploadService = async (file) => {
+    // console.log(data.ids,data.data);
+    const result = await Product.create(file);
+
+    return result;
+};
