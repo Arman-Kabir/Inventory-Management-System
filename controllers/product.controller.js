@@ -171,7 +171,8 @@ exports.fileUpload = async (req, res) => {
     try {
         
         // const productImage = await fileUploadService(req.file);
-        res.status(200).json(req.file)
+        // res.status(200).json(req.file)
+        res.status(200).json(req.files)
     } catch (error) {
         // res.status(400).json({
         //     status: 'fail',
