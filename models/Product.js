@@ -29,51 +29,51 @@ const productSchema = mongoose.Schema({
     imageURLs: [{
         type: String,
         required: true,
-        validate: {
-            validator: (value) => {
-                if (!Array.isArray(value)) {
-                    return false;
-                }
-                let isValid = true;
-                value.forEach(url => {
-                    if (!validator.isURL(url)) {
-                        isValid = false;
-                    }
-                });
-                return isValid;
-            },
-            message: "Please provide valid image urls"
-        },
-    }],
+        // validate: {
+        //     validator: (value) => {
+        //         if (!Array.isArray(value)) {
+        //             return false;
+        //         }
+        //         let isValid = true;
+        //         value.forEach(url => {
+        //             if (!validator.isURL(url)) {
+        //                 isValid = false;
+        //             }
+        //         });
+        //         return isValid;
+        //     },
+        //     message: "Please provide valid image urls"
+        // }
+    }], 
     category: {
         type: String,
         required: true,
     },
-    // brand: {
-    //     name: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     id: {
-    //         type: ObjectId,
-    //         ref: "Brand",
-    //         required: true
-    //     }
-    // }
+    brand: {
+        name: {
+            type: String,
+            required: true
+        },
+        id: {
+            type: ObjectId,
+            ref: "Brand",
+            required: true
+        }
+    }
 
 }, {
     timestamps: true
 });
 
 // mongoose middlewares for saving data: pre/post
-productSchema.pre('save', function (next) {
+// productSchema.pre('save', function (next) {
 
-    console.log('Before saving data');
-    if (this.quantity == 0) {
-        this.status = 'out-of-stock';
-    }
-    next()
-});
+//     console.log('Before saving data');
+//     if (this.quantity == 0) {
+//         this.status = 'out-of-stock';
+//     }
+//     next()
+// });
 
 // Schema ->Model -> Query
 const Product = mongoose.model('Product', productSchema);
