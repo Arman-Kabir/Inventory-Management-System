@@ -47,7 +47,7 @@ const stockSchema = mongoose.Schema({
         min: [0, "Product quantity can't be negative"]
     },
     category: {
-        type: Number,
+        type: String,
         required: true,
     },
     brand: {
