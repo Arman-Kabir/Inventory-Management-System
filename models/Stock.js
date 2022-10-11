@@ -13,7 +13,8 @@ const stockSchema = mongoose.Schema({
         type: String,
         required: [true, "Please provide a name for this product"],
         trim: true,
-        unique: [true, "Name must be unique"],
+        lowercase:true,
+        // unique: [true, "Name must be unique"],
         minLength: [3, "Name must be at least 3 charecters"],
         maxLength: [100, "Name is too large"]
     },
@@ -26,28 +27,14 @@ const stockSchema = mongoose.Schema({
         type: String,
         required: true,
         enum: {
-            values: ["kg", "liter", "pcs"],
-            message: "Unit value can't be {VALUE}, must be kg/liter/pcs/bag"
+            values: ["kg", "litre", "pcs","bag"],
+            message: "Unit value can't be {VALUE}, must be kg/litre/pcs/bag"
         }
     },
     imageURLs: [{
         type: String,
         required: true,
-        validate: {
-            validator: (value) => {
-                if (!Array.isArray(value)) {
-                    return false;
-                }
-                let isValid = true;
-                value.forEach(url => {
-                    if (!validator.isURL(url)) {
-                        isValid = false;
-                    }
-                });
-                return isValid;
-            },
-        },
-        message: "Please provide valid image urls"
+        validate: [validator.isURL,"Please provide valid url(s)"]       
     }],
     price: {
         type: Number,
@@ -63,17 +50,17 @@ const stockSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
-    // brand: {
-    //     name: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     id: {
-    //         type: ObjectId,
-    //         ref: "Brand",
-    //         required: true
-    //     }
-    // },
+    brand: {
+        name: {
+            type: String,
+            required: true
+        },
+        id: {
+            type: ObjectId,
+            ref: "Brand",
+            required: true
+        }
+    },
     status: {
         type: String,
         required: true,
@@ -110,6 +97,11 @@ const stockSchema = mongoose.Schema({
             type:ObjectId,
             ref:'Supplier'
         }
+    },
+    sellCount:{
+        type:Number,
+        default:0,
+        min:0
     }
 }, {
     timestamps: true
