@@ -1,6 +1,6 @@
 
 // const Product = require('../models/Product');
-const { getStocksService, createStockService, updateProductService, bulkUpdateProductService, deleteProductByIdService, bulkDeleteProductService, fileUploadService } = require('../services/stock.service');
+const { getStocksService, createStockService, updateProductService, bulkUpdateProductService, deleteProductByIdService, bulkDeleteProductService, fileUploadService, getStockByIdService } = require('../services/stock.service');
 
 exports.getStocks = async (req, res, next) => {
     try {
@@ -61,6 +61,33 @@ exports.getStocks = async (req, res, next) => {
     }
 };
 
+exports.getStockById= async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const stock = await getStockByIdService(id);
+
+        if(!stock){
+            return res.status(400).json({
+                status: "fail",
+                error: "can't get the stock with this id",
+            })
+        }
+        
+        res.status(200).json({
+            status:"Success",
+            data:stock
+        })
+
+
+    } catch (error) {
+        res.status(400).json({
+            status: "fail",
+            message: "can't get the stock",
+            error: error.message
+        })
+    }
+}
+
 exports.createStock = async (req, res, next) => {
     // res.send('it is working');
     // console.log(req.body);
@@ -83,7 +110,6 @@ exports.createStock = async (req, res, next) => {
         })
     }
     // save or create
-
 };
 
 // exports.updateProduct = async (req, res, next) => {
