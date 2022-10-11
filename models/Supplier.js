@@ -52,7 +52,7 @@ const supplierSchema = mongoose.Schema({
             message:"Please provide a valid phone number",
         },
     },
-    tradeLicenseNumber:{
+    tradeLicenceNumber:{
         type:Number,
         required:[true,"Please provide your trade license number"],
     },
@@ -94,7 +94,7 @@ const supplierSchema = mongoose.Schema({
 
 
 // Schema ->Model -> Query
-const Supplier = mongoose.model('Supplier', SupplierSchema);
+const Supplier = mongoose.model('Supplier', supplierSchema);
 
 
 module.exports = Supplier;
