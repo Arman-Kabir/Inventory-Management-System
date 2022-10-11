@@ -4,11 +4,7 @@ const validator = require('validator');
 
 // schema design
 const supplierSchema = mongoose.Schema({
-    productId: {
-        type: ObjectId,
-        required: true,
-        ref: 'Product'
-    },
+    
     name: {
         type: String,
         required: [true, "Please provide a name for this product"],
@@ -41,96 +37,55 @@ const supplierSchema = mongoose.Schema({
         required:[true,"Please provide a contact number"],
         validate:{
             validator:(value)=>{
-                
-            }
-        }
-    }]
-
-
-
-    description: {
-        type: String,
-        required: true
-    },
-
-    unit: {
-        type: String,
-        required: true,
-        enum: {
-            values: ["kg", "liter", "pcs"],
-            message: "Unit value can't be {VALUE}, must be kg/liter/pcs/bag"
-        }
-    },
-    imageURLs: [{
-        type: String,
-        required: true,
-        validate: {
-            validator: (value) => {
-                if (!Array.isArray(value)) {
-                    return false;
-                }
-                let isValid = true;
-                value.forEach(url => {
-                    if (!validator.isURL(url)) {
-                        isValid = false;
-                    }
-                });
-                return isValid;
+                return validator.isMobilePhone(value);
             },
-        },
-        message: "Please provide valid image urls"
+            message:"Please provide a valid phone number",
+        }
     }],
-    price: {
-        type: Number,
-        required: true,
-        min: [0, "Product price can't be negative"]
-    },
-    quantity: {
-        type: Number,
-        required: true,
-        min: [0, "Product quantity can't be negative"]
-    },
-    category: {
-        type: Number,
-        required: true,
-    },
-    
-    status: {
-        type: String,
-        required: true,
-        enum: {
-            values: ['in-stock', 'out-of-stock', 'discontinued'],
-            message: "status can't be {VALUE} "
+    emergencyContactNumber:{
+        type:String,
+        required:[true,"Please provide a emergency contact number"],
+        validate:{
+            validator:(value)=>{
+                return validator.isMobilePhone(value);
+            },
+            message:"Please provide a valid phone number",
         },
-
     },
-    store: {
-        name: {
-            type: String,
-            trim: true,
-            required: [true, "Please provide a store name"],
-            lowercase: true,
-            enum: {
-                values: ['dhaka', 'chattogram', 'rajshahi', 'sylhet', 'khulna', 'barisal', 'rangpur', 'mymensingh'],
-                message: "{VALUE} is not a valid name"
-            }
-        },
-        id: {
-            type: ObjectId,
-            required: true,
-            ref: 'Store'
-        }
+    tradeLicenseNumber:{
+        type:Number,
+        required:[true,"Please provide your trade license number"],
     },
-    suppliedBy: {
-        name: {
-            type: String,
-            trim: true,
-            required: [true, "Please provide a supplier name"],
+    presentAddress:{
+        type:String,
+        required:[true,"Please provide your present address"],
+    },
+    permanentAddress:{
+        type:String,
+        required:true,
+    },
+    location:{
+        type:String,
+        required:true,
+        lowercase:true,
+        enum:{
+            values:["dhaka","rajshahi","chattogram","sylhet","khulna","barishal","rangpur","mymensingh"],
+            message:"{VALUE} is not a correct division!"
         },
-        id: {
-            type: ObjectId,
-            ref: 'Supplier'
-        }
+    },
+    imageURL:{
+        type:String,
+        validate:[validator.isURL,"Please provide a valid url"]
+    },
+    nationalIdImageURL:{
+        type:String,
+        required:true,
+        validate:[validator.isURL,"Please provide a valid url"]
+    },
+    status:{
+        type:String,
+        default:"active",
+        enum:["active","inactive"],
     }
 }, {
     timestamps: true
@@ -139,7 +94,7 @@ const supplierSchema = mongoose.Schema({
 
 
 // Schema ->Model -> Query
-const Stock = mongoose.model('Stock', stockSchema);
+const Supplier = mongoose.model('Supplier', SupplierSchema);
 
 
-module.exports = Stock;
+module.exports = Supplier;
