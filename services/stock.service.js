@@ -16,6 +16,12 @@ exports.getStocksService = async (filters, queries) => {
     return stocks;
 };
 
+exports.getStockByIdService = async(id)=>{
+    // .populate("suppliedBy.Id")
+    const stock = await Stock.findOne({_id:id}).populate("brand.id");
+    return stock;
+}
+
 exports.createStockService = async (data) => {
     console.log(data);
     const stock = await Stock.create(data);
