@@ -1,0 +1,13 @@
+[
+    {
+        "email":"arman@test.com",
+        "password":"arman123456#A",
+        "confirmPassword":"arman123456#A",
+        "firstName":"Mezbaul Abedin",
+        "lastName":"Forhan",
+        "shippingAddress":"944 osthir Street",
+        "presentAddress":"944 osthir Street",
+        "permanentAddress":"944 Russell Street",
+        "imageURL":"https://i.bb.co/WnFSs9Y/unnamed.webp"
+    }
+]
