@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require('validator');
 const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 
 const userSchema = mongoose.Schema(
     {
@@ -90,7 +91,7 @@ userSchema.pre("save",function(next){
     next();
 });
 
-userSchema.comparePassword = function (password,hash){
+userSchema.methods.comparePassword = function (password,hash){
     const isPasswordValid = bcrypt.compareSync(password,hash);
     return isPasswordValid;
 }
