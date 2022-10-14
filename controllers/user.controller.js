@@ -1,19 +1,20 @@
-const bcrypt = require("bcryptjs");
-const { signupService, findUserByEmail } = require("../services/user.service")
+
+const { signupService, findUserByEmail } = require("../services/user.service");
+const { generateToken } = require("../utils/token");
 
 exports.signup = async (req, res) => {
     try {
         const user = await signupService(req.body);
         // other tasks such as - email sending, profile creation code will be placed here
-        
+
         res.status(200).json({
-            status:"success",
-            message:"successfully signed up",
-            data:user
+            status: "success",
+            message: "successfully signed up",
+            data: user
         });
     } catch (error) {
         res.status(500).json({
-            status:"fail",
+            status: "fail",
             error,
         })
     }
@@ -30,44 +31,60 @@ exports.signup = async (req, res) => {
 8. generate token
 9. send user and token
 10. 
-*/ 
+*/
 exports.login = async (req, res) => {
     try {
-        const {email,password} = req.body;
+        const { email, password } = req.body;
 
-        if(!email || !password){
+        if (!email || !password) {
             return res.status(401).json({
-                status:"status fail",
-                error:"please provide your credentials"
+                status: "status fail",
+                error: "please provide your credentials"
             });
         }
-        
+
         const user = await findUserByEmail(email);
 
-        if(!user){
+        if (!user) {
             return res.status(401).json({
-                status:"fail",
-                error:"No User found.Please create an account"
+                status: "fail",
+                error: "No User found.Please create an account"
             })
         }
 
-        const isPasswordValid = user.comparePassword(password,)
+        const isPasswordValid = user.comparePassword(password, user.password);
 
-        if(!isPasswordValid){
+        if (!isPasswordValid) {
             return res.status(403).json({
-                status:"fail",
-                error:"Password is not valid"
+                status: "fail",
+                error: "Password is not valid"
             })
         }
+
+        if (user.status != "active") {
+            return res.status(401).json({
+                status: "fail",
+                error: "Your account is not active yet"
+            });
+        }
+
+        const token = generateToken(user);
+
+        const { password: pwd, ...others } = user.toObject();
+
+
 
         res.status(200).json({
-            status:"success",
-            message:"successfully signed up",
-            data:user
+            status: "success",
+            message: "successfully logged in",
+            data: {
+                user: others,
+                token
+            }
         });
     } catch (error) {
         res.status(500).json({
-            status:"fail",
+            status: "fail",
             error,
         })
     }
