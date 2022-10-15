@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { promisify } = require("util");
 /**
  * 1. check if token exists
  * 2. if not token send res
@@ -19,9 +20,18 @@ module.exports = async (req, res, next) => {
             })
         }
 
-        const decoded = await jwt.verify()
+        // jwt.verify()
+        const decoded = await promisify(jwt.verify)(token, process.env.TOKEN_SECRET);
 
+        // const user = User.findOne({ email: decoded.email });
+        // req.user = user;
+
+        req.user = decoded;
+        next();
     } catch (error) {
-
+        res.status(403).json({
+            status: "fail",
+            error: "Invalid token"
+        })
     }
 }
