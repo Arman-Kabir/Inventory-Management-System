@@ -3,6 +3,7 @@ const { generateToken } = require("../utils/token");
 
 exports.signup = async (req, res) => {
     try {
+        
         const user = await signupService(req.body);
         // other tasks such as - email sending, profile creation code will be placed here
 
