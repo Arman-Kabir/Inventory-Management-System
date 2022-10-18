@@ -3,6 +3,10 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/product.controller');
 const uploader = require('../middleware/uploader');
+const verifyToken = require('../middleware/verifyToken');
+const authorization = require("../middleware/authorization");
+
+// router.use(verifyToken);
 
 // const multer = require("multer");
 
@@ -21,10 +25,10 @@ router.route("/bulk-delete").delete(productController.bulkDeleteProduct)
 
 router.route('/')
     .get(productController.getProducts)
-    .post(productController.createProduct)
+    .post(verifyToken, authorization("admin","store-manager"), productController.createProduct);
 
 router.route("/:id")
     .patch(productController.updateProduct)
-    .delete(productController.deleteProductById)
+    .delete(authorization("admin"), productController.deleteProductById)
 
 module.exports = router;
